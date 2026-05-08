@@ -1,0 +1,19 @@
+.container {
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form {
+    width: 160px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+}
