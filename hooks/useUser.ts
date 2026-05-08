@@ -7,8 +7,6 @@ import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 type Profile = {
   id: string;
   role: "doctor" | "patient";
-  nfc_uid: string | null;
-  nfc_registered_at: string | null;
 };
 
 export function useUser() {
@@ -35,7 +33,7 @@ export function useUser() {
 
       const { data: profile, error } = await supabase
         .from("profiles")
-        .select("id, role, nfc_uid, nfc_registered_at")
+        .select("id, role")
         .eq("id", user.id)
         .single();
 
