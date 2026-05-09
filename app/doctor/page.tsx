@@ -138,7 +138,17 @@ export default function Patient() {
                   : "Patients will appear here after selecting you"}
               </span>
             </div>
-            <button className={style.callButton}>Start</button>
+            <button
+              className={style.callButton}
+              onClick={() => {
+                if (nextPatient) {
+                  window.location.href = `/doctor/queue?patient_id=${nextPatient.id}`;
+                }
+              }}
+              type="button"
+            >
+              Start
+            </button>
           </section>
 
           <section className={style.quickGrid}>

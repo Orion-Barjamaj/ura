@@ -53,5 +53,22 @@ export async function GET(req: Request) {
     }),
   );
 
-  return Response.json({ patients });
+  const sortedPatients = patients.sort((a, b) => {
+    const aAbnormal =
+      a.latest &&
+      (a.latest.bpm > 100 || a.latest.bpm < 50 || a.latest.spo2 < 94);
+    const bAbnormal =
+      b.latest &&
+      (b.latest.bpm > 100 || b.latest.bpm < 50 || b.latest.spo2 < 94);
+
+    if (aAbnormal && !bAbnormal) return -1;
+    if (!aAbnormal && bAbnormal) return 1;
+
+    const aTime = a.latest ? new Date(a.latest.created_at).getTime() : 0;
+    const bTime = b.latest ? new Date(b.latest.created_at).getTime() : 0;
+
+    return bTime - aTime;
+  });
+
+  return Response.json({ patients: sortedPatients });
 }

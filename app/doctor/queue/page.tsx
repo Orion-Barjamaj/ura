@@ -62,10 +62,21 @@ export default function DoctorQueue() {
         });
         const data = await response.json();
         const nextPatients = data.patients ?? [];
+        const patientId = new URLSearchParams(window.location.search).get(
+          "patient_id",
+        );
 
         if (isActive) {
           setPatients(nextPatients);
           setSelectedPatient((currentPatient) => {
+            if (patientId) {
+              return (
+                nextPatients.find(
+                  (patient: DoctorPatient) => patient.id === patientId,
+                ) ?? null
+              );
+            }
+
             if (!currentPatient) return null;
             return (
               nextPatients.find(
@@ -134,7 +145,7 @@ export default function DoctorQueue() {
                       selectedPatient?.id === patient.id
                         ? style.activePatient
                         : ""
-                    }`}
+                    } ${abnormal ? style.urgentPatient : ""}`}
                     key={patient.id}
                     onClick={() => {
                       setSelectedPatient(patient);

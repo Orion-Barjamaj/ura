@@ -412,6 +412,31 @@
     background: #eef3ff;
 }
 
+.urgentPatient {
+    border-color: rgba(238, 77, 77, 0.34);
+    background: #fff1f1;
+}
+
+.urgentPatient:hover,
+.urgentPatient.activePatient {
+    border-color: rgba(214, 63, 63, 0.54);
+    background: #ffe3e3;
+}
+
+.urgentPatient .patientPhoto {
+    background-color: #d63f3f;
+}
+
+.urgentPatient h3,
+.urgentPatient .patientMeta strong {
+    color: #8f1f1f;
+}
+
+.urgentPatient .patientMeta span {
+    background: #ffe0e0;
+    color: #d63f3f;
+}
+
 .patientRow:active {
     transform: translateY(1px);
 }
