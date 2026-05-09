@@ -3,6 +3,7 @@
 import style from "./patient.module.css";
 import { useUser } from "@/hooks/useUser";
 import Navbar from "../components/navbar";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type Measurement = {
@@ -32,6 +33,7 @@ function getInitials(name: string) {
 
 export default function Patient() {
   const { user, profile, loading } = useUser();
+  const router = useRouter();
 
   const [patients, setPatients] = useState<DoctorPatient[]>([]);
   const [selectedPatient, setSelectedPatient] = useState<DoctorPatient | null>(
@@ -41,6 +43,12 @@ export default function Patient() {
   const [isWritingNote, setIsWritingNote] = useState(false);
   const [noteStatus, setNoteStatus] = useState("");
   const [savingNote, setSavingNote] = useState(false);
+
+  useEffect(() => {
+    if (!loading && profile?.role === "patient") {
+      router.replace("/patient");
+    }
+  }, [loading, profile?.role, router]);
 
   useEffect(() => {
     if (!profile?.id) return;
@@ -125,7 +133,7 @@ export default function Patient() {
             <button className={style.callButton}>Start</button>
           </section>
 
-          <section className={style.panel}>
+          <section className={style.panel} id="patients">
             <div className={style.sectionHeader}>
               <div>
                 <p>Queue</p>
@@ -353,7 +361,7 @@ export default function Patient() {
             </section>
           </div>
         )}
-        <Navbar />
+        <Navbar role="doctor" />
       </div>
     </div>
   );

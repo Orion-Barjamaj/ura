@@ -2,6 +2,7 @@
 
 import Navbar from "@/app/components/navbar";
 import { useUser } from "@/hooks/useUser";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import style from "../patient.module.css";
 
@@ -14,8 +15,15 @@ type DoctorNote = {
 
 export default function PatientNotes() {
   const { profile, loading } = useUser();
+  const router = useRouter();
   const [notes, setNotes] = useState<DoctorNote[]>([]);
   const [notesLoading, setNotesLoading] = useState(true);
+
+  useEffect(() => {
+    if (!loading && profile?.role === "doctor") {
+      router.replace("/doctor");
+    }
+  }, [loading, profile?.role, router]);
 
   useEffect(() => {
     if (!profile?.id) return;
@@ -62,7 +70,7 @@ export default function PatientNotes() {
             ))}
           </section>
         </div>
-        <Navbar />
+        <Navbar role="patient" />
       </div>
     </div>
   );

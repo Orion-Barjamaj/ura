@@ -5,6 +5,7 @@ import { useUser } from "@/hooks/useUser";
 import Navbar from "../components/navbar";
 import Measurements from "./getMeasuerments";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type Doctor = {
   id: string;
@@ -13,9 +14,16 @@ type Doctor = {
 
 export default function Patient() {
   const { user, profile, loading } = useUser();
+  const router = useRouter();
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [selectedDoctorId, setSelectedDoctorId] = useState("");
   const [doctorStatus, setDoctorStatus] = useState("");
+
+  useEffect(() => {
+    if (!loading && profile?.role === "doctor") {
+      router.replace("/doctor");
+    }
+  }, [loading, profile?.role, router]);
 
   useEffect(() => {
     fetch("/api/doctors")
@@ -124,7 +132,7 @@ export default function Patient() {
 
           <Measurements profileId={profile!.id} />
         </div>
-        <Navbar />
+        <Navbar role="patient" />
       </div>
     </div>
   );

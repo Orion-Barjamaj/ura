@@ -1,17 +1,26 @@
 import style from "./navbar.module.css";
 
-export default function Navbar() {
+type NavbarRole = "patient" | "doctor";
+
+export default function Navbar({ role }: { role: NavbarRole }) {
+  const links =
+    role === "patient"
+      ? [
+          { href: "/patient", label: "Dashboard", text: "D" },
+          { href: "/patient/notes", label: "Doctor notes", text: "N" },
+        ]
+      : [
+          { href: "/doctor", label: "Dashboard", text: "D" },
+          { href: "/doctor#patients", label: "Patients", text: "P" },
+        ];
+
   return (
     <nav className={style.container} aria-label="App navigation">
-      <a href="/patient" className={style.link} aria-label="Dashboard">
-        <span>D</span>
-      </a>
-      <a href="/patient/notes" className={style.link} aria-label="Doctor notes">
-        <span>N</span>
-      </a>
-      <a href="/doctor" className={style.link} aria-label="Doctor dashboard">
-        <span>Dr</span>
-      </a>
+      {links.map((link) => (
+        <a href={link.href} className={style.link} aria-label={link.label} key={link.href}>
+          <span>{link.text}</span>
+        </a>
+      ))}
     </nav>
   );
 }
