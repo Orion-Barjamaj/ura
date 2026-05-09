@@ -94,12 +94,36 @@ export default function Measurements({ profileId }: { profileId: string }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`/api/measurement/${profileId}`)
-      .then((r) => r.json())
-      .then((d) => {
-        setMeasurements(d.measurements ?? []);
-        setLoading(false);
-      });
+    let isActive = true;
+
+    async function loadMeasurements() {
+      try {
+        const response = await fetch(`/api/measurement/${profileId}`, {
+          cache: "no-store",
+        });
+        const data = await response.json();
+
+        if (isActive) {
+          setMeasurements(data.measurements ?? []);
+        }
+      } catch {
+        if (isActive) {
+          setMeasurements([]);
+        }
+      } finally {
+        if (isActive) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadMeasurements();
+    const intervalId = window.setInterval(loadMeasurements, 5000);
+
+    return () => {
+      isActive = false;
+      window.clearInterval(intervalId);
+    };
   }, [profileId]);
 
   if (loading) return <div className="spinner" />;

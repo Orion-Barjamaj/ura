@@ -52,10 +52,42 @@ export default function DoctorQueue() {
   useEffect(() => {
     if (!profile?.id) return;
 
-    fetch(`/api/doctor-patients?doctor_id=${profile.id}`)
-      .then((response) => response.json())
-      .then((data) => setPatients(data.patients ?? []))
-      .catch(() => setPatients([]));
+    let isActive = true;
+    const doctorId = profile.id;
+
+    async function loadPatients() {
+      try {
+        const response = await fetch(`/api/doctor-patients?doctor_id=${doctorId}`, {
+          cache: "no-store",
+        });
+        const data = await response.json();
+        const nextPatients = data.patients ?? [];
+
+        if (isActive) {
+          setPatients(nextPatients);
+          setSelectedPatient((currentPatient) => {
+            if (!currentPatient) return null;
+            return (
+              nextPatients.find(
+                (patient: DoctorPatient) => patient.id === currentPatient.id,
+              ) ?? currentPatient
+            );
+          });
+        }
+      } catch {
+        if (isActive) {
+          setPatients([]);
+        }
+      }
+    }
+
+    loadPatients();
+    const intervalId = window.setInterval(loadPatients, 5000);
+
+    return () => {
+      isActive = false;
+      window.clearInterval(intervalId);
+    };
   }, [profile?.id]);
 
   if (loading) {

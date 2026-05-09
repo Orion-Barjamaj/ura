@@ -28,10 +28,37 @@ export default function PatientNotes() {
   useEffect(() => {
     if (!profile?.id) return;
 
-    fetch(`/api/patient-notes?patient_id=${profile.id}`)
-      .then((response) => response.json())
-      .then((data) => setNotes(data.notes ?? []))
-      .finally(() => setNotesLoading(false));
+    let isActive = true;
+    const patientId = profile.id;
+
+    async function loadNotes() {
+      try {
+        const response = await fetch(`/api/patient-notes?patient_id=${patientId}`, {
+          cache: "no-store",
+        });
+        const data = await response.json();
+
+        if (isActive) {
+          setNotes(data.notes ?? []);
+        }
+      } catch {
+        if (isActive) {
+          setNotes([]);
+        }
+      } finally {
+        if (isActive) {
+          setNotesLoading(false);
+        }
+      }
+    }
+
+    loadNotes();
+    const intervalId = window.setInterval(loadNotes, 5000);
+
+    return () => {
+      isActive = false;
+      window.clearInterval(intervalId);
+    };
   }, [profile?.id]);
 
   if (loading) {

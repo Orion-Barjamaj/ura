@@ -35,10 +35,33 @@ export default function Patient() {
   useEffect(() => {
     if (!profile?.id) return;
 
-    fetch(`/api/doctor-patients?doctor_id=${profile.id}`)
-      .then((response) => response.json())
-      .then((data) => setPatients(data.patients ?? []))
-      .catch(() => setPatients([]));
+    let isActive = true;
+    const doctorId = profile.id;
+
+    async function loadPatients() {
+      try {
+        const response = await fetch(`/api/doctor-patients?doctor_id=${doctorId}`, {
+          cache: "no-store",
+        });
+        const data = await response.json();
+
+        if (isActive) {
+          setPatients(data.patients ?? []);
+        }
+      } catch {
+        if (isActive) {
+          setPatients([]);
+        }
+      }
+    }
+
+    loadPatients();
+    const intervalId = window.setInterval(loadPatients, 5000);
+
+    return () => {
+      isActive = false;
+      window.clearInterval(intervalId);
+    };
   }, [profile?.id]);
 
   if (loading) {
