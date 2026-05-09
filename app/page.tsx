@@ -1,65 +1,79 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./page.module.css";
 
 export default function Home() {
   return (
     <div className={styles.page}>
+      <section className={styles.hero}>
+        <div className={styles.heroBackdrop} aria-hidden="true" />
+        <nav className={styles.nav} aria-label="Landing navigation">
+          <strong>URA Health</strong>
+          <Link href="/auth">Sign in</Link>
+        </nav>
+
+        <div className={styles.heroContent}>
+          <p>Live patient monitoring</p>
+          <h1>URA Health</h1>
+          <span>
+            Track heart rate and SpO2 updates in real time, keep doctors in the
+            loop, and make patient check-ins feel calm and immediate.
+          </span>
+          <div className={styles.heroActions}>
+            <Link className={styles.primaryAction} href="/auth">
+              Get started
+            </Link>
+            <Link className={styles.secondaryAction} href="/patient">
+              Patient view
+            </Link>
+          </div>
+        </div>
+
+        <div className={styles.livePanel} aria-label="Example live vitals">
+          <div className={styles.panelHeader}>
+            <span>Live update</span>
+            <strong>Stable</strong>
+          </div>
+          <div className={styles.vitals}>
+            <article>
+              <span>Heart rate</span>
+              <strong>78</strong>
+              <p>bpm</p>
+            </article>
+            <article>
+              <span>SpO2</span>
+              <strong>98%</strong>
+              <p>oxygen</p>
+            </article>
+          </div>
+          <div className={styles.patientLine}>
+            <Image src="/patient.png" alt="" width={42} height={42} aria-hidden="true" />
+            <div>
+              <strong>Patient dashboard</strong>
+              <span>New readings appear automatically</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        <section className={styles.featureGrid} aria-label="App highlights">
+          <article>
+            <span>01</span>
+            <h2>Patient vitals</h2>
+            <p>Patients can see their latest measurements, trends, and history without refreshing the page.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h2>Doctor overview</h2>
+            <p>Doctors get a live queue of patients, urgent readings, and contact details in one focused dashboard.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h2>Notes and follow-up</h2>
+            <p>Doctor notes are delivered back to the patient view so care instructions stay easy to find.</p>
+          </article>
+        </section>
       </main>
     </div>
   );

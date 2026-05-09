@@ -310,7 +310,7 @@ export default function DoctorQueue() {
                             throw new Error(data.error ?? "Could not send note");
                           }
 
-                          setNoteStatus("Note sent to backend.");
+                          setNoteStatus("");
                           setIsWritingNote(false);
                           setDraftNote("");
                         })
