@@ -272,6 +272,381 @@
     font-size: 12px;
 }
 
+.doctorCard,
+.panel,
+.quickGrid article {
+    border: 1px solid #e8eaf0;
+    background: #ffffff;
+    box-shadow: 0 14px 30px rgba(67, 93, 140, 0.08);
+}
+
+.doctorCard {
+    min-height: 132px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 14px;
+    padding: 18px;
+    border-radius: 28px;
+    background:
+        radial-gradient(circle at 86% 18%, rgba(255, 246, 134, 0.9) 0 36px, transparent 37px),
+        linear-gradient(135deg, #5D86DA, #4d76c8);
+    color: white;
+}
+
+.doctorCard p,
+.sectionHeader p,
+.quickGrid p {
+    margin: 0;
+    color: inherit;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.doctorCard h2 {
+    margin: 6px 0 7px;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.doctorCard span {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.doctorCard .callButton {
+    min-width: 72px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #4d76c8;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.panel {
+    border-radius: 26px;
+    padding: 16px;
+    margin-bottom: 14px;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.sectionHeader p,
+.quickGrid p {
+    color: #5D86DA;
+}
+
+.sectionHeader h2 {
+    margin: 4px 0 0;
+    color: #131313;
+    font-size: 18px;
+    line-height: 1.1;
+    letter-spacing: 0;
+}
+
+.sectionHeader > span {
+    color: #7b8496;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.patientList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.emptyState {
+    margin: 0;
+    padding: 14px;
+    border-radius: 18px;
+    background: #f7f8fb;
+    color: #697286;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.patientRow {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 18px;
+    background: #f7f8fb;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        border-color 150ms ease,
+        background 150ms ease,
+        transform 150ms ease;
+}
+
+.patientRow:hover,
+.activePatient {
+    border-color: rgba(93, 134, 218, 0.34);
+    background: #eef3ff;
+}
+
+.patientRow:active {
+    transform: translateY(1px);
+}
+
+.patientRow h3 {
+    margin: 0 0 4px;
+    color: #131313;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.patientRow p {
+    margin: 0;
+    color: #697286;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.patientMeta {
+    text-align: right;
+}
+
+.patientMeta strong {
+    display: block;
+    color: #131313;
+    font-size: 13px;
+}
+
+.patientMeta span {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #eef3ff;
+    color: #5D86DA;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.quickGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.patientDashboard {
+    width: calc(100% - 28px);
+    max-width: 392px;
+    padding: 16px;
+    border: 1px solid #e8eaf0;
+    border-radius: 26px;
+    background: #ffffff;
+    box-shadow: 0 24px 60px rgba(26, 39, 68, 0.24);
+}
+
+.modalOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(17, 24, 39, 0.28);
+    backdrop-filter: blur(8px);
+}
+
+.closeButton {
+    display: block;
+    margin: 0 0 12px auto;
+    border: 0;
+    border-radius: 999px;
+    background: #eef3ff;
+    color: #5D86DA;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.patientDashboardHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.patientDashboardHeader .patientPhoto {
+    width: 54px;
+    height: 54px;
+}
+
+.patientDashboardHeader p,
+.vitalsGrid p,
+.noteCard p {
+    margin: 0;
+    color: #5D86DA;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.patientDashboardHeader h2 {
+    margin: 4px 0;
+    color: #131313;
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.patientDashboardHeader span,
+.noteCard span {
+    color: #697286;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.vitalsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.vitalsGrid article {
+    min-height: 86px;
+    padding: 12px;
+    border-radius: 18px;
+    background: #f7f8fb;
+}
+
+.vitalsGrid strong {
+    display: block;
+    margin: 8px 0 3px;
+    color: #131313;
+    font-size: 20px;
+    line-height: 1;
+}
+
+.vitalsGrid span {
+    color: #7b8496;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.noteCard {
+    padding: 12px;
+    border-radius: 18px;
+    background: #eef3ff;
+}
+
+.historyList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 18px;
+    background: #f7f8fb;
+}
+
+.historyList p {
+    margin: 0 0 2px;
+    color: #5D86DA;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.historyList div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: #697286;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.historyList strong {
+    color: #131313;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.noteCard p {
+    margin-bottom: 6px;
+}
+
+.noteButton,
+.noteForm button {
+    width: 100%;
+    margin-top: 12px;
+    border: 0;
+    border-radius: 14px;
+    background: #5D86DA;
+    color: #ffffff;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 11px 12px;
+    cursor: pointer;
+}
+
+.noteForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.noteForm textarea {
+    width: 100%;
+    min-height: 92px;
+    resize: none;
+    border: 1px solid rgba(93, 134, 218, 0.22);
+    border-radius: 14px;
+    background: #ffffff;
+    color: #131313;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    outline: none;
+    padding: 10px;
+}
+
+.noteForm textarea:focus {
+    border-color: #5D86DA;
+}
+
+.quickGrid article {
+    min-height: 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 24px;
+    padding: 16px;
+}
+
+.quickGrid strong {
+    color: #131313;
+    font-size: 19px;
+    line-height: 1;
+}
+
 @media (max-width: 430px) {
     .dashboard {
         padding: 18px 14px 24px;
@@ -283,5 +658,14 @@
 
     .appointmentGrid {
         gap: 7px;
+    }
+
+    .doctorCard {
+        min-height: 116px;
+        padding: 16px;
+    }
+
+    .patientRow {
+        grid-template-columns: 40px 1fr auto;
     }
 }
