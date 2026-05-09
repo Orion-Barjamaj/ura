@@ -123,6 +123,11 @@
     letter-spacing: 0;
 }
 
+.statCard span {
+    font-size: 12px;
+    font-weight: 600;
+}
+
 .searchRow {
     display: grid;
     grid-template-columns: 1fr 44px 44px;
