@@ -23,6 +23,11 @@
     padding: 22px 20px 26px;
 }
 
+.statCard span {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
 .header {
     display: flex;
     align-items: center;
@@ -285,6 +290,7 @@
 
 .doctorCard,
 .panel,
+.patientDirectory,
 .quickGrid article {
     border: 1px solid #e8eaf0;
     background: #ffffff;
@@ -343,6 +349,12 @@
     margin-bottom: 14px;
 }
 
+.patientDirectory {
+    border-radius: 26px;
+    padding: 16px;
+    margin-bottom: 64px;
+}
+
 .sectionHeader {
     display: flex;
     align-items: flex-start;
@@ -374,6 +386,72 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.patientSearch {
+    height: 46px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding: 0 14px;
+    border-radius: 16px;
+    background: #f7f8fb;
+    border: 1px solid #eef1f6;
+}
+
+.patientSearch span {
+    color: #5D86DA;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.patientSearch input {
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #131313;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.patientSearch input::placeholder {
+    color: #98a1b2;
+}
+
+.directoryList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.directoryRow {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 18px;
+    background: #f7f8fb;
+}
+
+.directoryRow h3 {
+    margin: 0 0 4px;
+    color: #131313;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.directoryRow p {
+    margin: 0;
+    color: #697286;
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .emptyState {

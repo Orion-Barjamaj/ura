@@ -20,11 +20,19 @@ type DoctorPatient = {
   latest: Measurement | null;
 };
 
+type PatientContact = {
+  id: string;
+  name: string;
+  phone: string;
+};
+
 export default function Patient() {
   const { user, profile, loading } = useUser();
   const router = useRouter();
 
   const [patients, setPatients] = useState<DoctorPatient[]>([]);
+  const [allPatients, setAllPatients] = useState<PatientContact[]>([]);
+  const [patientSearch, setPatientSearch] = useState("");
 
   useEffect(() => {
     if (!loading && profile?.role === "patient") {
@@ -64,6 +72,35 @@ export default function Patient() {
     };
   }, [profile?.id]);
 
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadAllPatients() {
+      try {
+        const response = await fetch("/api/patients", {
+          cache: "no-store",
+        });
+        const data = await response.json();
+
+        if (isActive) {
+          setAllPatients(data.patients ?? []);
+        }
+      } catch {
+        if (isActive) {
+          setAllPatients([]);
+        }
+      }
+    }
+
+    loadAllPatients();
+    const intervalId = window.setInterval(loadAllPatients, 5000);
+
+    return () => {
+      isActive = false;
+      window.clearInterval(intervalId);
+    };
+  }, []);
+
   if (loading) {
     return (
       <div className="loadingScreen">
@@ -94,6 +131,14 @@ export default function Patient() {
     ? Math.round((stableCount / patients.length) * 100)
     : 0;
   const nextPatient = patients[0];
+  const normalizedPatientSearch = patientSearch.trim().toLowerCase();
+  const filteredPatients = normalizedPatientSearch
+    ? allPatients.filter((patient) =>
+        `${patient.name} ${patient.phone}`
+          .toLowerCase()
+          .includes(normalizedPatientSearch),
+      )
+    : allPatients;
 
   return (
     <div className={style.mainContainer}>
@@ -151,15 +196,47 @@ export default function Patient() {
             </button>
           </section>
 
-          <section className={style.quickGrid}>
-            <article>
-              <p>Messages</p>
-              <strong>8 unread</strong>
-            </article>
-            <article>
-              <p>Reports</p>
-              <strong>5 pending</strong>
-            </article>
+          <section className={style.patientDirectory}>
+            <div className={style.sectionHeader}>
+              <div>
+                <p>Patient directory</p>
+                <h2>All patients</h2>
+              </div>
+              <span>{filteredPatients.length} shown</span>
+            </div>
+
+            <label className={style.patientSearch}>
+              <span>Search</span>
+              <input
+                value={patientSearch}
+                onChange={(event) => setPatientSearch(event.target.value)}
+                placeholder="Name or phone"
+                type="search"
+              />
+            </label>
+
+            <div className={style.directoryList}>
+              {!filteredPatients.length && (
+                <p className={style.emptyState}>No patients found.</p>
+              )}
+
+              {filteredPatients.map((patient) => (
+                <article className={style.directoryRow} key={patient.id}>
+                  <div className={style.patientPhoto}>
+                    {patient.name
+                      .split(" ")
+                      .map((part) => part[0])
+                      .join("")
+                      .slice(0, 2)
+                      .toUpperCase() || "PT"}
+                  </div>
+                  <div>
+                    <h3>{patient.name}</h3>
+                    <p>{patient.phone}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </section>
         </div>
         <Navbar role="doctor" />
