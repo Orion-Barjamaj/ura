@@ -34,7 +34,13 @@ export default function PatientNotes() {
       .finally(() => setNotesLoading(false));
   }, [profile?.id]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="loadingScreen">
+        <div className="spinner" />
+      </div>
+    );
+  }
 
   return (
     <div className={style.mainContainer}>
@@ -46,7 +52,11 @@ export default function PatientNotes() {
           </section>
 
           <section className={style.notesPanel}>
-            {notesLoading && <p>Loading notes...</p>}
+            {notesLoading && (
+              <div className="loadingScreen">
+                <div className="spinner" />
+              </div>
+            )}
 
             {!notesLoading && !notes.length && (
               <p>No doctor notes have been sent yet.</p>

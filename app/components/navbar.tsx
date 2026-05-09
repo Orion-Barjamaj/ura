@@ -11,7 +11,7 @@ export default function Navbar({ role }: { role: NavbarRole }) {
         ]
       : [
           { href: "/doctor", label: "Dashboard", text: "D" },
-          { href: "/doctor#patients", label: "Patients", text: "P" },
+          { href: "/doctor/queue", label: "Patients", text: "P" },
         ];
 
   return (
