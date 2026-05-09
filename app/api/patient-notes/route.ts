@@ -16,7 +16,23 @@ export async function GET(req: Request) {
 
   if (error) return Response.json({ error: error.message }, { status: 500 });
 
-  return Response.json({ notes: data });
+  const notes = await Promise.all(
+    (data ?? []).map(async (note) => {
+      const { data: doctor } = await supabaseAdmin.auth.admin.getUserById(
+        note.doctor_id,
+      );
+
+      return {
+        ...note,
+        doctor_name:
+          doctor.user?.user_metadata?.display_name ??
+          doctor.user?.email ??
+          "Doctor",
+      };
+    }),
+  );
+
+  return Response.json({ notes });
 }
 
 export async function POST(req: Request) {
