@@ -96,34 +96,9 @@
   font-weight: 800;
 }
 
-.chartSvg {
-  display: block;
+.chartCanvas {
   width: 100%;
   height: 130px;
-  overflow: visible;
-}
-
-.chartAxis {
-  stroke: #edf1f7;
-  stroke-width: 2;
-}
-
-.bpmLine {
-  fill: none;
-  stroke: #5c85d9;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 4;
-}
-
-.bpmPoint {
-  fill: #ffffff;
-  stroke: #5c85d9;
-  stroke-width: 3;
-}
-
-.oxygenBar {
-  fill: #4cb883;
 }
 
 .historyCard {

@@ -21,8 +21,8 @@
 }
 
 .link {
-    background: rgba(17, 29, 22, 0.76);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+    background: #5C85D9;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
     border-radius: 8px;
     height: 100%;
     aspect-ratio: 1 / 1;

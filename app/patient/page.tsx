@@ -53,15 +53,13 @@ export default function Patient() {
           <header className={style.header}>
             <div className={style.headerActions}>
               <div className={style.avatar}>{patientInitials}</div>
-              <button className={style.alertButton} aria-label="Notifications">
-              </button>
             </div>
-          </header>
 
-          <section className={style.hero}>
-            <p>Patient Management</p>
-            <h1>Dashboard</h1>
-          </section>
+            <section className={style.hero}>
+              <p>Patient Management</p>
+              <h1>Dashboard</h1>
+            </section>
+          </header>
 
           <section className={style.doctorSelectCard}>
             <div>
@@ -96,7 +94,9 @@ export default function Patient() {
                       throw new Error(data.error ?? "Could not save doctor");
                     }
 
-                    setDoctorStatus("Doctor selected. They will see your changes.");
+                    setDoctorStatus(
+                      "Doctor selected. They will see your changes.",
+                    );
                   })
                   .catch((error: Error) => {
                     setDoctorStatus(error.message);
@@ -121,8 +121,8 @@ export default function Patient() {
             </form>
             {doctorStatus && <span>{doctorStatus}</span>}
           </section>
-          
-          <Measurements profileId={profile!.id}/>
+
+          <Measurements profileId={profile!.id} />
         </div>
         <Navbar />
       </div>

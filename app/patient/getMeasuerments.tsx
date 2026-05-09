@@ -1,5 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import style from "./measure.module.css";
 
 type Measurement = {
@@ -8,10 +19,6 @@ type Measurement = {
   spo2: number;
   created_at: string;
 };
-
-const CHART_WIDTH = 320;
-const CHART_HEIGHT = 120;
-const CHART_PADDING = 12;
 
 function StatCard({ label, value, status }: { label: string; value: string; status: "ok" | "warn" }) {
   return (
@@ -22,28 +29,15 @@ function StatCard({ label, value, status }: { label: string; value: string; stat
   );
 }
 
-function getPoint(index: number, total: number, value: number, min: number, max: number) {
-  const chartWidth = CHART_WIDTH - CHART_PADDING * 2;
-  const chartHeight = CHART_HEIGHT - CHART_PADDING * 2;
-  const safeRange = max - min || 1;
-  const x = total === 1 ? CHART_WIDTH / 2 : CHART_PADDING + (index / (total - 1)) * chartWidth;
-  const y = CHART_PADDING + (1 - (value - min) / safeRange) * chartHeight;
-
-  return { x, y };
-}
-
 function MeasurementCharts({ measurements }: { measurements: Measurement[] }) {
-  const chartData = [...measurements].reverse().slice(-8);
-  const bpmValues = chartData.map((m) => m.bpm);
-  const oxygenValues = chartData.map((m) => m.spo2);
-  const bpmMin = Math.min(...bpmValues) - 6;
-  const bpmMax = Math.max(...bpmValues) + 6;
-  const oxygenMin = Math.max(80, Math.min(...oxygenValues) - 3);
-  const oxygenMax = Math.min(100, Math.max(...oxygenValues) + 2);
-  const bpmPoints = chartData.map((m, index) => getPoint(index, chartData.length, m.bpm, bpmMin, bpmMax));
-  const bpmPath = bpmPoints.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x} ${point.y}`).join(" ");
-  const barGap = 8;
-  const barWidth = Math.max(12, (CHART_WIDTH - CHART_PADDING * 2 - barGap * (chartData.length - 1)) / chartData.length);
+  const chartData = [...measurements]
+    .reverse()
+    .slice(-8)
+    .map((measurement) => ({
+      time: new Date(measurement.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      bpm: measurement.bpm,
+      spo2: measurement.spo2,
+    }));
 
   return (
     <section className={style.chartSection}>
@@ -60,13 +54,17 @@ function MeasurementCharts({ measurements }: { measurements: Measurement[] }) {
             <span>BPM</span>
             <strong>{measurements[0].bpm}</strong>
           </div>
-          <svg className={style.chartSvg} viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`} role="img" aria-label="Heart rate line graph">
-            <line x1="12" y1="108" x2="308" y2="108" className={style.chartAxis} />
-            <path d={bpmPath} className={style.bpmLine} />
-            {bpmPoints.map((point, index) => (
-              <circle key={chartData[index].id} cx={point.x} cy={point.y} r="3.5" className={style.bpmPoint} />
-            ))}
-          </svg>
+          <div className={style.chartCanvas}>
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: -24 }}>
+                <CartesianGrid vertical={false} stroke="#eef2f7" />
+                <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: "#8490a3", fontSize: 10 }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: "#8490a3", fontSize: 10 }} domain={["dataMin - 8", "dataMax + 8"]} />
+                <Tooltip contentStyle={{ border: "0", borderRadius: 10, boxShadow: "0 12px 28px rgba(38, 61, 98, 0.12)" }} />
+                <Line type="monotone" dataKey="bpm" stroke="#5C85D9" strokeWidth={3} dot={{ r: 3, fill: "#ffffff", stroke: "#5C85D9", strokeWidth: 2 }} activeDot={{ r: 5 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         <div className={style.chartCard}>
@@ -74,26 +72,17 @@ function MeasurementCharts({ measurements }: { measurements: Measurement[] }) {
             <span>Blood Oxygen</span>
             <strong>{measurements[0].spo2}%</strong>
           </div>
-          <svg className={style.chartSvg} viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`} role="img" aria-label="Blood oxygen bar graph">
-            <line x1="12" y1="108" x2="308" y2="108" className={style.chartAxis} />
-            {chartData.map((m, index) => {
-              const point = getPoint(index, chartData.length, m.spo2, oxygenMin, oxygenMax);
-              const x = chartData.length === 1 ? CHART_WIDTH / 2 - barWidth / 2 : CHART_PADDING + index * (barWidth + barGap);
-              const height = CHART_HEIGHT - CHART_PADDING - point.y;
-
-              return (
-                <rect
-                  key={m.id}
-                  x={x}
-                  y={point.y}
-                  width={barWidth}
-                  height={Math.max(4, height)}
-                  rx="5"
-                  className={style.oxygenBar}
-                />
-              );
-            })}
-          </svg>
+          <div className={style.chartCanvas}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 8, right: 8, bottom: 0, left: -24 }}>
+                <CartesianGrid vertical={false} stroke="#eef2f7" />
+                <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: "#8490a3", fontSize: 10 }} />
+                <YAxis axisLine={false} tickLine={false} tick={{ fill: "#8490a3", fontSize: 10 }} domain={[80, 100]} />
+                <Tooltip contentStyle={{ border: "0", borderRadius: 10, boxShadow: "0 12px 28px rgba(38, 61, 98, 0.12)" }} />
+                <Bar dataKey="spo2" fill="#4CB883" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
     </section>
