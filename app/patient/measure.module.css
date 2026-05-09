@@ -1,0 +1,212 @@
+.statCardContainer {
+  display: flex;
+  width: 100%;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.statCard {
+  background-color: #5c85d9;
+  border-radius: 16px;
+  padding: 16px;
+  width: 50%;
+}
+
+.statCardOk {
+  background-color: #5c85d9;
+}
+
+.statCardWarn {
+  background-color: #d96f5c;
+}
+
+.statCardLabel {
+    font-size: 16px;
+    font-weight: 700;
+    color: #E9F1FC;
+}
+
+.statCardValue {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.measurements {
+  width: 100%;
+}
+
+.chartSection {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.chartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.chartHeader h2 {
+  color: #151b26;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.chartHeader p {
+  margin-top: 2px;
+  color: #7b8798;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.chartGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.chartCard {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #edf1f7;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(38, 61, 98, 0.08);
+}
+
+.chartTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.chartTitleRow span {
+  color: #667386;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.chartTitleRow strong {
+  color: #151b26;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.chartSvg {
+  display: block;
+  width: 100%;
+  height: 130px;
+  overflow: visible;
+}
+
+.chartAxis {
+  stroke: #edf1f7;
+  stroke-width: 2;
+}
+
+.bpmLine {
+  fill: none;
+  stroke: #5c85d9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.bpmPoint {
+  fill: #ffffff;
+  stroke: #5c85d9;
+  stroke-width: 3;
+}
+
+.oxygenBar {
+  fill: #4cb883;
+}
+
+.historyCard {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #edf1f7;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(38, 61, 98, 0.08);
+}
+
+.historyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.historyHeader h2 {
+  color: #151b26;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.historyHeader span {
+  flex-shrink: 0;
+  color: #7b8798;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.historyTable {
+  width: 100%;
+  border-collapse: collapse;
+  color: #1c2430;
+  font-size: 13px;
+}
+
+.historyTable th {
+  padding: 10px 0;
+  color: #8490a3;
+  font-size: 11px;
+  font-weight: 800;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.historyTable td {
+  padding: 12px 0;
+  border-top: 1px solid #f0f3f8;
+  font-weight: 700;
+}
+
+.historyTable td:first-child {
+  color: #667386;
+  font-weight: 600;
+}
+
+.historyTable th:last-child,
+.historyTable td:last-child {
+  text-align: right;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.statusNormal {
+  color: #16734d;
+  background: #e9f8f1;
+}
+
+.statusWarning {
+  color: #b84636;
+  background: #fff0ed;
+}
