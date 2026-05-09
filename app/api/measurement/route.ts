@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   let anomaly_score = 0;
 
   try {
-    const prediction = await fetch("http://localhost:8000/predict", {
+    const prediction = await fetch(`${process.env.NEXT_PUBLIC_ML_ENDPOINT}/predict`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ bpm, spo2 })
