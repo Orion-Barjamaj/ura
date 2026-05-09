@@ -3,10 +3,13 @@
 import { getSupabaseBrowserClient } from "@/lib/supabase/browser-client";
 import style from "./auth.module.css";
 import React, { useEffect, useState } from "react";
+import { Inter } from "next/font/google";
 import { useRouter } from "next/navigation";
 
 type Mode = "signup" | "signin";
 type Role = "patient" | "doctor";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Auth() {
   const [mode, setMode] = useState<Mode>("signup");
@@ -108,105 +111,134 @@ export default function Auth() {
   }
 
   return (
-    <div className={style.container}>
-      <form action="" className={style.form} onSubmit={handleSubmit}>
-        {mode === "signup" && (
-          <>
+    <div className={`${style.container} ${inter.className}`}>
+      <main className={style.shell}>
+        <section className={style.imagePanel} aria-label="Healthcare preview">
+          <div className={style.imageContent}>
+            <h2>Healthcare in your pocket</h2>
+            <p>Find doctors, track care, and book faster</p>
+          </div>
+        </section>
+
+        <section className={style.authPanel}>
+          <form action="" className={style.form} onSubmit={handleSubmit}>
+            {mode === "signup" && (
+              <>
+                <div className={style.roleGroup} aria-label="Choose role">
+                  <label className={style.roleOption}>
+                    <input
+                      type="radio"
+                      name="role"
+                      value={"patient"}
+                      checked={role === "patient"}
+                      onChange={(e) => setRole(e.target.value as Role)}
+                    />
+                    Pacient
+                  </label>
+                  <label className={style.roleOption}>
+                    <input
+                      type="radio"
+                      name="role"
+                      value={"doctor"}
+                      checked={role === "doctor"}
+                      onChange={(e) => setRole(e.target.value as Role)}
+                    />
+                    Doktor
+                  </label>
+                </div>
+
+                <div className={style.inputContainer}>
+                  <label htmlFor="name" className={style.label}>
+                    Full name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    className={style.input}
+                    placeholder="Full name"
+                    required
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    value={displayName}
+                  />
+                </div>
+
+                <div className={style.inputContainer}>
+                  <label htmlFor="tel" className={style.label}>
+                    Phone number
+                  </label>
+                  <input
+                    type="text"
+                    id="tel"
+                    name="tel"
+                    className={style.input}
+                    placeholder="Phone number"
+                    required
+                    onChange={(e) => setPhone(e.target.value)}
+                    value={phone}
+                  />
+                </div>
+              </>
+            )}
+
             <div className={style.inputContainer}>
-              <label htmlFor="name" className={style.label}>
-                Roli:
-              </label>
-              <div className={style.radioContainer}>
-                <input
-                  type="radio"
-                  id="patient"
-                  name="role"
-                  value={"patient"}
-                  className={style.input}
-                  checked={role === "patient"}
-                  onChange={(e) => setRole(e.target.value as Role)}
-                />
-                <label htmlFor="patient">Pacient</label>
-              </div>
-              <div className={style.radioContainer}>
-                <input
-                  type="radio"
-                  id="doctor"
-                  name="role"
-                  value={"doctor"}
-                  className={style.input}
-                  checked={role === "doctor"}
-                  onChange={(e) => setRole(e.target.value as Role)}
-                />
-                <label htmlFor="doctor">Doktor</label>
-              </div>
-            </div>
-            <div className={style.inputContainer}>
-              <label htmlFor="name" className={style.label}>
-                Emri i plote:
+              <label htmlFor="email" className={style.label}>
+                Email
               </label>
               <input
-                type="text"
-                id="name"
-                name="name"
+                type="email"
+                id="email"
+                name="email"
                 className={style.input}
+                placeholder="Email"
                 required
-                onChange={(e) => setDisplayName(e.target.value)}
-                value={displayName}
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
               />
             </div>
+
             <div className={style.inputContainer}>
-              <label htmlFor="tel" className={style.label}>
-                Numri i telefonit:
+              <label htmlFor="password" className={style.label}>
+                Password
               </label>
               <input
-                type="text"
-                id="tel"
-                name="tel"
+                type="password"
+                id="password"
+                name="password"
                 className={style.input}
+                placeholder="Password"
                 required
-                onChange={(e) => setPhone(e.target.value)}
-                value={phone}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
             </div>
-          </>
-        )}
-        <div className={style.inputContainer}>
-          <label htmlFor="email" className={style.label}>
-            Email:
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            className={style.input}
-            required
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-        </div>
-        <div className={style.inputContainer}>
-          <label htmlFor="password" className={style.label}>
-            Password:
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            className={style.input}
-            required
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        </div>
-        {status && <p>{status}</p>}
-        <button type="submit">
-          {mode === "signup" ? "Krijo Llogari" : "Hyr"}
-        </button>
-        <button type="button" onClick={toggleMode}>
-          {mode === "signup" ? "Ke llogari? Hyr" : "Ska llogari? Regjistrohu"}
-        </button>
-      </form>
+
+            {mode === "signup" && (
+              <label className={style.terms}>
+                <input type="checkbox" required />
+                <span>
+                  I agree with the <strong>Terms &amp; Condition</strong>
+                </span>
+              </label>
+            )}
+
+            {status && <p className={style.status}>{status}</p>}
+
+            <button className={style.submitButton} type="submit">
+              {mode === "signup" ? "Continue" : "Login"}
+            </button>
+
+            <p className={style.switchText}>
+              {mode === "signup"
+                ? "Already have an account?"
+                : "Don't have an account?"}{" "}
+              <button type="button" onClick={toggleMode}>
+                {mode === "signup" ? "Login" : "Sign up"}
+              </button>
+            </p>
+          </form>
+        </section>
+      </main>
     </div>
   );
 }
