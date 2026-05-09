@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+const nextConfig = {
+  turbopack: {
+    root: __dirname,
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
