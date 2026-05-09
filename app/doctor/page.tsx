@@ -79,9 +79,6 @@ export default function Patient() {
           <header className={style.header}>
             <div className={style.headerActions}>
               <div className={style.avatar}>{doctorInitials}</div>
-              <button className={style.alertButton} aria-label="Notifications">
-                <span />
-              </button>
             </div>
           </header>
 

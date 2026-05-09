@@ -197,7 +197,18 @@
 }
 
 .statCard:nth-child(2) {
-    background: linear-gradient(160deg, rgba(119, 215, 143, 0.62), rgba(216, 245, 204, 0.72));
+    border-color: rgba(238, 77, 77, 0.28);
+    background: linear-gradient(160deg, rgba(255, 226, 226, 0.96), rgba(255, 243, 243, 0.88));
+    box-shadow: 0 16px 36px rgba(238, 77, 77, 0.14);
+}
+
+.statCard:nth-child(2) span,
+.statCard:nth-child(2) p {
+    color: #d63f3f;
+}
+
+.statCard:nth-child(2) strong {
+    color: #8f1f1f;
 }
 
 .statCard span {
