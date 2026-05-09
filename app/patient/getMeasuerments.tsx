@@ -103,7 +103,7 @@ export default function Measurements({ profileId }: { profileId: string }) {
   }, [profileId]);
 
   if (loading) return <div className="spinner" />;
-  if (!measurements.length) return <p>No measurements yet.</p>;
+  if (!measurements.length) return <p className={style.emptyState}>No measurements yet.</p>;
 
   const latest = measurements[0];
 

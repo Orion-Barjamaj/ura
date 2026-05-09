@@ -35,6 +35,13 @@
   width: 100%;
 }
 
+.emptyState {
+  width: 100%;
+  color: #000000;
+  text-align: center;
+  font-weight: 700;
+}
+
 .chartSection {
   width: 100%;
   margin-bottom: 18px;
